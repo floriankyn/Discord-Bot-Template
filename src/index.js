@@ -1,57 +1,62 @@
 //index.js// -- Created By FLorian Lepage
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
-const client = new Client(
+require("dotenv").config(
     {
-        intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.GuildMembers,
-            GatewayIntentBits.DirectMessageReactions,
-            GatewayIntentBits.DirectMessages,
-            GatewayIntentBits.MessageContent,
-            GatewayIntentBits.GuildPresences,
-            GatewayIntentBits.GuildMessageReactions,
-            GatewayIntentBits.GuildIntegrations
-        ], partials: [
-            Partials.Channel,
-            Partials.Reaction,
-            Partials.Message,
-            Partials.GuildMember
-        ]
+        path: __dirname + "/../.env"
     }
 );
 
-const config = require("./config/config.json");
+const main = async () => {
+    const client = new Client(
+        {
+            intents: [
+                GatewayIntentBits.Guilds,
+                GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.DirectMessageReactions,
+                GatewayIntentBits.DirectMessages,
+                GatewayIntentBits.MessageContent,
+                GatewayIntentBits.GuildPresences,
+                GatewayIntentBits.GuildMessageReactions,
+                GatewayIntentBits.GuildIntegrations
+            ], partials: [
+                Partials.Channel,
+                Partials.Reaction,
+                Partials.Message,
+                Partials.GuildMember
+            ]
+        }
+    );
 
-//Libs imports
-const { CommandsLoader } = require("./components/CommandsLoader.js");
-const { SQLTablesManager } = require("./components/SQLTablesManager.js");
-const { Database } = require("./database/Database.js");
+    //Helpers imports
+    const {CommandsLoader} = require("./helpers/CommandsLoader.js");
+    const {DatabaseManager} = require("./helpers/DatabaseManager.js");
 
-//Modules Imports
+    //Components Imports
+    const {AdministratorComponent} = require("./components/AdministratorComponent.js");
+    const {EventComponent} = require("./components/EventComponent.js");
+    const {UserComponent} = require("./components/UserComponent.js");
+
+    const db = await new DatabaseManager();
+
+    client.on('ready', async() => {
+        console.log(`Logged in as ${client.user.tag}!`);
+        await db.checkConnectionState();
+
+        await new CommandsLoader(client).loadCommands();
+        await new EventComponent(client, db).commandEvent();
+    });
+
+    client.on('interactionCreate', async interaction => {
+        await new AdministratorComponent(client, interaction, db).onInteraction();
+        await new UserComponent(client, interaction, db).onInteraction();
+    });
 
 
-client.on('ready', async() => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    client.login().then().catch();
+}
 
-    await new Database(config).checkConnectionState();
-
-    await new SQLTablesManager(config, [
-
-    ]).loadTables();
-
-    await new CommandsLoader(client, [
-
-    ], config).loadCommands();
+main().then().catch((err) => {
+    throw err;
 });
-
-client.on("interactionCreate", (interaction) => {
-
-});
-
-client.on(`messageCreate`, (message) => {
-
-})
-
-client.login(config.discord.token).then().catch();
