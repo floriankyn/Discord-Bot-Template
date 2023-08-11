@@ -14,13 +14,7 @@ class Command {
     async startCmd() {
         await this.interaction.deferReply({fetchReply: true, ephemeral: true})
             .then(async (message) => {
-                if(this.interaction.member.permissions.has("Administrator")) {
-                    await this.commandFlow(message.id);
-                } else {
-                    await this.interaction.webhook.editMessage(message.id,
-                        this.embeds.PermissionsError(this.interaction)
-                    ).then().catch(console.error);
-                }
+                await this.commandFlow(message.id);
             })
             .catch(console.error);
     }
