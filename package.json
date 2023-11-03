@@ -4,7 +4,12 @@
   "description": "A simple discord bot repository template that uses nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node --env-file ./src/config/env/.env.local ./dist/config/index.js",
+    "dev": "tsc && node --env-file ./src/config/env/.env.local ./dist/config/index.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "prettier": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -29,6 +34,9 @@
     "@discordjs/rest": "^1.5.0",
     "discord.js": "^14.7.1",
     "dotenv": "^16.3.1",
-    "mysql2": "^3.1.0"
+    "mysql2": "^3.1.0",
+    "typescript": "^5.2.2",
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
   }
 }
