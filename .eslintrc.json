@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "google",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "no-async-promise-executor": "off",
+    "@typescript-eslint/no-namespace": "off"
+  }
+}
