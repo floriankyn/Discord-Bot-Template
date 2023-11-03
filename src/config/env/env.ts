@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const envSchema = z.object({
   DISCORD_TOKEN: z.string(),
@@ -6,7 +6,6 @@ const envSchema = z.object({
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv
-        extends z.infer<typeof envSchema> {}
+    interface ProcessEnv extends z.infer<typeof envSchema> {}
   }
 }
