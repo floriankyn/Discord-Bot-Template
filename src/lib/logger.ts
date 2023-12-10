@@ -18,7 +18,7 @@ const Logger = createLogger({
     format.timestamp(),
     format.printf(({ timestamp, level, message }) => {
       return `${timestamp} [${level.toUpperCase()}]: ${message}`;
-    }),
+    })
   ),
   transports: [
     new transports.Console(),
@@ -29,10 +29,10 @@ const Logger = createLogger({
 export const logUserAction = (
   user: User | null,
   command: string,
-  channel: TextBasedChannel | null,
+  channel: TextBasedChannel | null
 ): void => {
   Logger.info(
-    `User ${user?.username}#${user?.discriminator} (${user?.id}) ran command ${command} in channel ${channel?.isTextBased.name} (${channel?.id})`,
+    `User ${user?.username}#${user?.discriminator} (${user?.id}) ran command ${command} in channel ${channel?.isTextBased.name} (${channel?.id})`
   );
 };
 

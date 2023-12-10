@@ -1,8 +1,8 @@
-// Path: src/components/CommandComponent.ts
+// Path: src/components/LoadCommands.ts
 import { readdirSync } from 'fs';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { Client, CommandInteraction, REST, Routes } from 'discord.js';
-import { logMessage, logError, logUserAction } from '../utils/logger';
+import { logMessage, logError, logUserAction } from '../lib/logger';
 
 const bannedCommands: string[] = ['/ping'];
 
@@ -69,7 +69,7 @@ export const refreshCommands = async (client: Client): Promise<void> => {
 
 export const loadCommandsInteraction = async (
   client: Client,
-  interaction: CommandInteraction,
+  interaction: CommandInteraction
 ): Promise<void> => {
   const cmds: Command[] = Cache;
 
@@ -80,7 +80,7 @@ export const loadCommandsInteraction = async (
   }
 
   const command = cmds.find(
-    (cmd) => cmd.default.name === interaction.commandName,
+    (cmd) => cmd.default.name === interaction.commandName
   );
 
   if (command !== undefined) {

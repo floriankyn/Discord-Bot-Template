@@ -10,9 +10,14 @@ import {
 import {
   loadCommandsInteraction,
   refreshCommands,
-} from '../components/CommandComponent.js';
-import { logMessage, logError } from '../utils/logger';
+} from '../components/LoadCommands.js';
+import { loadEvents } from '../components/LoadEvents.js';
+import { logMessage, logError } from '../lib/logger';
+import { connectPrisma } from './database';
+import { main as mainServer } from '../server/webhook';
 import './env/env.js';
+
+// import { WhitelistEvent} from '../events/whitelist.js';
 
 const main = async () => {
   const client = new Client({
@@ -40,6 +45,14 @@ const main = async () => {
       logMessage(`Logged in as ${client.user.tag}!`);
 
       await refreshCommands(client);
+
+      await connectPrisma();
+
+      mainServer()
+        .then()
+        .catch((err: Error) => {
+          throw err;
+        });
     }
   });
 
@@ -54,8 +67,10 @@ const main = async () => {
           logError(`Unknown interaction type | ${interaction.type}`);
           break;
       }
-    },
+    }
   );
+
+  loadEvents(client);
 
   client.login(process.env.DISCORD_TOKEN).then().catch();
 };
