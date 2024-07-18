@@ -1,6 +1,6 @@
 import { Client, Events, Message } from 'discord.js';
 
-import { logError, logMessage } from '../lib/logger.js';
+import { logError, logMessage } from '../libs/logger.js';
 
 class JobsButtons {
   client: Client;

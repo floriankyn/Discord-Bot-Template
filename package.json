@@ -1,58 +1,21 @@
 {
-  "name": "discord-bot-template",
-  "version": "1.0.0",
-  "description": "A simple discord bot repository template that uses nodejs",
-  "main": "index.js",
+  "name": "monitor-discord-bot",
+  "module": "index.ts",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node --env-file ./src/config/env/.env.local ./dist/config/index.js",
-    "test": "jest",
-    "dev": "tsc && node --env-file ./src/config/env/.env.local ./dist/config/index.js",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "format": "prettier --write 'src/**/*.{js,ts,tsx,json,md}'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/floriankyn/Discord-Bot-Template.git"
-  },
-  "keywords": [
-    "discordjs",
-    "discord",
-    "nodejs",
-    "javascript",
-    "mysql",
-    "database"
-  ],
-  "author": "Florian Lepage",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/floriankyn/Discord-Bot-Template/issues"
-  },
-  "homepage": "https://github.com/floriankyn/Discord-Bot-Template#readme",
-  "dependencies": {
-    "@discordjs/builders": "^1.4.0",
-    "@discordjs/rest": "^1.5.0",
-    "@prisma/client": "^5.7.0",
-    "body-parser": "^1.20.2",
-    "discord.js": "^14.7.1",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mysql2": "^3.1.0",
-    "prisma": "^5.7.0",
-    "typescript": "^5.2.2",
-    "winston": "^3.11.0",
-    "zod": "^3.22.4"
+    "dev": "bun --env-file=./src/config/env/.env.local index.ts"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.19.5",
-    "@types/express": "^4.17.21",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.52.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.0.3"
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.17.0",
+    "discord.js": "^14.15.3",
+    "prisma": "^5.17.0",
+    "winston": "^3.13.1",
+    "zod": "^3.23.8"
   }
 }
